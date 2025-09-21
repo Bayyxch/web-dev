@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayy - Server & Code Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --gold: #FFD700;
+            --red: #FF4500;
+            --purple: #800080;
+            --blue: #4169E1;
+            --dark: #121212;
+            --dark-gray: #2D2D2D;
+            --light-gray: #444444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-gray) 50%, var(--dark) 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        .comic-universe {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Comic Header */
+        .comic-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .title-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .main-title {
+            font-family: 'Righteous', cursive;
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--gold), var(--red), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .title-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Righteous', cursive;
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: 1;
+            white-space: nowrap;
+        }
+        
+        .subtitle {
+            font-size: 1.6rem;
+            color: var(--gold);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        /* Comic Grid Layout */
+        .comic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Comic Panel Styling */
+        .comic-panel {
+            background: linear-gradient(145deg, rgba(18, 18, 18, 0.9), rgba(45, 45, 45, 0.9));
+            border: 4px solid;
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel-1 {
+            border-color: var(--gold);
+            background: linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(45, 45, 45, 0.9));
+        }
+        
+        .panel-2 {
+            border-color: var(--red);
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.9), rgba(18, 18, 18, 0.95));
+        }
+        
+        .panel-3 {
+            border-color: var(--purple);
+            background: linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(65, 105, 225, 0.1));
+        }
+        
+        .panel-4 {
+            border-color: var(--blue);
+            background: linear-gradient(145deg, rgba(65, 105, 225, 0.1), rgba(18, 18, 18, 0.95));
+        }
+        
+        .panel-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, transparent, var(--gold), transparent) 1;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .panel-content {
+            line-height: 1.8;
+            color: #CCCCCC;
+            font-size: 1.1rem;
+        }
+        
+        /* Character Avatar */
+        .character-showcase {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .avatar-container {
+            display: inline-block;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .avatar {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(45deg, var(--gold), var(--red), var(--purple), var(--blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        .avatar-ring {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            border-color: var(--red);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+        
+        .skill-desc {
+            font-size: 0.9rem;
+            color: #AAAAAA;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(18, 18, 18, 0.8), rgba(45, 45, 45, 0.8));
+            border-radius: 20px;
+            border: 3px solid var(--purple);
+        }
+        
+        .contact-title {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .social-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 69, 0, 0.1));
+            border: 2px solid;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .social-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+        }
+        
+        .social-card.discord {
+            border-color: #5865F2;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(114, 137, 218, 0.2));
+        }
+        
+        .social-card.whatsapp {
+            border-color: #25D366;
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(18, 140, 126, 0.2));
+        }
+        
+        .social-card.instagram {
+            border-color: #E1306C;
+            background: linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(193, 53, 132, 0.2));
+        }
+        
+        .social-card.tiktok {
+            border-color: #000000;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(37, 244, 238, 0.1));
+        }
+        
+        .social-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .social-username {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .social-platform {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes glow {
+            0% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); }
+            100% { box-shadow: 0 0 60px rgba(255, 69, 0, 0.6), 0 0 100px rgba(255, 215, 0, 0.4); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .title-bg {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .comic-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 2.5rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Decorative Elements */
+        .comic-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .comic-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <div class="comic-universe">
+        <!-- Header -->
+        <div class="comic-header">
+            <div class="title-container">
+                <h1 class="main-title">BAYY</h1>
+                <div class="title-bg">SERVER SPECIALIST</div>
+            </div>
+            <div class="subtitle">CODE • SERVER • SOLUTIONS</div>
+        </div>
+        
+        <!-- Character Showcase -->
+        <div class="character-showcase">
+            <div class="avatar-container">
+                <div class="avatar floating">B</div>
+                <div class="avatar-ring"></div>
+            </div>
+        </div>
+        
+        <!-- Comic Grid -->
+        <div class="comic-grid">
+            <!-- Panel 1: About -->
+            <div class="comic-panel panel-1">
+                <h3 class="panel-title">ABOUT ME</h3>
+                <div class="panel-content">
+                    <p>I'm Bayy, a passionate server enthusiast and problem solver with a deep love for coding and system administration. My journey in technology revolves around mastering server management and understanding complex systems from the ground up.</p>
+                    <p>While currently building my professional portfolio, I specialize in VPS configuration, game server setup, and technical troubleshooting with a focus on elegant solutions.</p>
+                </div>
+            </div>
+            
+            <!-- Panel 2: Expertise -->
+            <div class="comic-panel panel-2">
+                <h3 class="panel-title">EXPERTISE</h3>
+                <div class="panel-content">
+                    <p>My expertise lies in server architecture and problem resolution. I thrive on challenges that require deep technical understanding and creative problem-solving approaches.</p>
+                    <p>From initial server deployment to advanced configuration and optimization, I ensure systems run efficiently and reliably under various workloads and conditions.</p>
+                </div>
+            </div>
+            
+            <!-- Panel 3: Skills -->
+            <div class="comic-panel panel-3">
+                <h3 class="panel-title">TECHNICAL SKILLS</h3>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">🖥️</div>
+                        <div class="skill-name">VPS Management</div>
+                        <div class="skill-desc">Server setup & configuration</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🔍</div>
+                        <div class="skill-name">Error Analysis</div>
+                        <div class="skill-desc">Log reading & debugging</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🎮</div>
+                        <div class="skill-name">Game Servers</div>
+                        <div class="skill-desc">Minecraft & game hosting</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">⚙️</div>
+                        <div class="skill-name">System Admin</div>
+                        <div class="skill-desc">Software installation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Panel 4: Philosophy -->
+            <div class="comic-panel panel-4">
+                <h3 class="panel-title">MY PHILOSOPHY</h3>
+                <div class="panel-content">
+                    <p>I believe that every error log tells a story and every server challenge is an opportunity for growth. My approach combines technical precision with creative problem-solving to deliver robust solutions.</p>
+                    <p>Quality, reliability, and attention to detail define my work ethic. I'm constantly learning and adapting to new technologies while maintaining a passion for making systems work better.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h3 class="contact-title">LET'S CONNECT</h3>
+            <div class="social-grid">
+                <a href="https://discord.com/users/Bayyxch" class="social-card discord">
+                    <div class="social-icon">🎮</div>
+                    <div class="social-username">Bayyxch</div>
+                    <div class="social-platform">Discord</div>
+                </a>
+                <a href="https://wa.me/62881036898230" class="social-card whatsapp">
+                    <div class="social-icon">💬</div>
+                    <div class="social-username">+62 881 0368 98230</div>
+                    <div class="social-platform">WhatsApp</div>
+                </a>
+                <a href="https://instagram.com/bayyxch_" class="social-card instagram">
+                    <div class="social-icon">📷</div>
+                    <div class="social-username">@bayyxch_</div>
+                    <div class="social-platform">Instagram</div>
+                </a>
+                <a href="https://tiktok.com/@Bayyxch_" class="social-card tiktok">
+                    <div class="social-icon">🎵</div>
+                    <div class="social-username">@Bayyxch_</div>
+                    <div class="social-platform">TikTok</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced animations and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Panel reveal animation
+            const panels = document.querySelectorAll('.comic-panel, .social-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            panels.forEach(panel => {
+                panel.style.opacity = 0;
+                panel.style.transform = 'translateY(50px) scale(0.95)';
+                panel.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                observer.observe(panel);
+            });
+            
+            // Interactive skill cards
+            const skillCards = document.querySelectorAll('.skill-card');
+            skillCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px) scale(1.05)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Add some decorative elements dynamically
+            function addDecorations() {
+                const container = document.querySelector('.comic-universe');
+                for (let i = 0; i < 15; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'comic-dot';
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.top = Math.random() * 100 + '%';
+                    dot.style.animationDelay = Math.random() * 2 + 's';
+                    dot.style.animationDuration = 3 + Math.random() * 2 + 's';
+                    container.appendChild(dot);
+                }
+            }
+            
+            addDecorations();
+        });
+    </script>
+</body>
+</html>
